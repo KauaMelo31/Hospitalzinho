@@ -361,7 +361,7 @@ HAVING YEAR(data_consulta) = '2020';
 
 select *, MAX(valor_consulta), MIN(valor_consulta) 
 FROM consulta 
-GROUP BY data_consulta IS NULL;
+GROUP BY data_consulta having convenio_id IS NULL;
 
 -- Nome do paciente, nome do médico, data da internação e procedimentos das internações realizadas por médicos da especialidade “gastroenterologia”, que tenham acontecido em “enfermaria”.
 
