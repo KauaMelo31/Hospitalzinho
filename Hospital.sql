@@ -349,3 +349,29 @@ update medico set em_atividade = 'Ativo' where id_medico = 7;
 update medico set em_atividade = 'Ativo' where id_medico = 8;
 update medico set em_atividade = 'Ativo' where id_medico = 9;
 update medico set em_atividade = 'Ativo' where id_medico = 10;
+
+-- Todos os dados e o valor médio das consultas do ano de 2020 e das que foram feitas sob convênio.
+
+SELECT *, AVG(valor_consulta) 
+FROM consulta 
+GROUP BY data_consulta 
+HAVING YEAR(data_consulta) = '2020';
+
+-- Todos os dados da consulta de maior valor e também da de menor valor (ambas as consultas não foram realizadas sob convênio).
+
+select *, MAX(valor_consulta), MIN(valor_consulta) 
+FROM consulta 
+GROUP BY data_consulta IS NULL;
+
+-- Nome do paciente, nome do médico, data da internação e procedimentos das internações realizadas por médicos da especialidade “gastroenterologia”, que tenham acontecido em “enfermaria”.
+
+SELECT paciente.nome_paciente, medico.nome_medico, internacao.data_entrada, internacao.desc_procedimentos, quarto.tipo_id 
+FROM internacao
+INNER JOIN medico 
+ON medico.id_medico = internacao.medico_id
+INNER JOIN paciente 
+ON paciente.id_paciente = internacao.paciente_id 
+INNER JOIN quarto 
+ON quarto.tipo_id = internacao.quarto_id 
+WHERE quarto.tipo_id = 3 AND medico.especialidade_id = 3;
+
